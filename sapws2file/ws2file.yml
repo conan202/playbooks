@@ -1,0 +1,18 @@
+- hosts: localhost
+  gather_facts: no
+  vars_files:
+    - ./vars.yml    
+  tasks:
+  - name: consume ws
+    uri: 
+      url: "{{uribcu}}"
+      method: POST
+      return_content: yes
+      headers:
+        Content-Type: "text/xml;charset=UTF-8"
+        SOAPAction: "wsbcucotizaciones.Execute"
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+    with_items:
+    - { src: ./request_gr1.xml, dest: ./coti.xml }
+    - { src: ./request_gr1.xml, dest: ./coti2.xml }   
